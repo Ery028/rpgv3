@@ -1,0 +1,28 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Bárbaro"
+    },
+    {
+      "id": 2,
+      "name": "Bardo"
+    },
+    {
+      "id": 3,
+      "name": "Bruxo"
+    }
+  ],
+  "fichas": [
+    {
+      "name": "Erick",
+      "personagem": "Guts",
+      "category_id": 1
+    },
+    {
+      "name": "Andrews",
+      "personagem": "Garou",
+      "category_id": 2
+    }
+  ]
+}
