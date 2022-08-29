@@ -1,6 +1,8 @@
 body{
     background-image : url('/img/signin.jpg');
-    background-size: cover;}
+    background-size: cover;
+    background-repeat: no-repeat;};
+
 
     h1, label {
         color: white;
@@ -9,4 +11,5 @@ body{
     .navbar{
     
         background-color: rgb(153, 123, 163);
+        
     }

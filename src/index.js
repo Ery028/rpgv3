@@ -5,7 +5,7 @@ import morgan from 'morgan';
 
 import router from './routes.js';
 
-const port = process.env.PORT || 3020;
+const port = process.env.PORT || 3030;
 
 const app = express();
 

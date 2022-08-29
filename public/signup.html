@@ -13,10 +13,11 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="./css/signup.css">
     <title>Cadastro</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container">
         <a class="navbar-brand" href="#">Fichas App</a>
         <button
@@ -91,12 +92,12 @@
     <script>
       const form = document.querySelector('form');
 
-      form.onsubmit = (event) => {
+      form.onsubmit = async (event) => {
         event.preventDefault();
 
         const user = Object.fromEntries(new FormData(form));
 
-        createUser(user);
+        await createUser(user);
 
         location.href = '/signin.html';
       };

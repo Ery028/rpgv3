@@ -1,5 +1,5 @@
 body{
-    background-image : url('/img/front1.png');
+    background-image : url('/img/signup.jpg');
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -10,6 +10,4 @@ h1, label {
 
 .navbar{
 
-    background-color: rgb(210,105,30);
-    
-}
+    background-color: rgb(56, 126, 218);}
