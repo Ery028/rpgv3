@@ -8,6 +8,8 @@ import User from './models/User.js';
 
 import { isAuthenticated } from './middleware/auth.js';
 
+import SendMail from './services/SendMail.js';
+
 const router = Router();
 
 router.get('/', (req, res) => res.redirect('/fichas.html'));
@@ -81,6 +83,8 @@ router.post('/users', async (req, res) => {
     const user = req.body;
 
     const newUser = await User.create(user);
+
+    await SendMail.createNewUser(user.email);
 
     res.json(newUser);
   } catch (error) {

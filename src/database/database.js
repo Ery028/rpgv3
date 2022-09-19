@@ -1,4 +1,4 @@
-import Database from 'sqlite-async';
+import {Database} from 'sqlite-async';
 import { resolve } from 'path';
 
 const dbFile = resolve(process.cwd(), 'src', 'database', 'db.sqlite');
