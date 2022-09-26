@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import mailConfig from '../config/mail.js';
 
-async function createNewUser(to) {
+async function submitEmail(to, subject, text, html) {
   try {
     const config = await mailConfig();
 
@@ -10,15 +10,17 @@ async function createNewUser(to) {
     const info = await transporter.sendMail({
       from: 'noreplay@email.com',
       to,
-      subject: 'Conta criada no Foods App',
-      text: `Conta criada com sucesso.\n\nAcesse o aplicativo para gerenciar o cadastro de comidas.`,
-      html: `<h1>Conta criada com sucesso.</h1><p>Acesse o aplicativo para gerenciar o cadastro de comidas.</p>`,
+      subject: subject,
+      text: text,
+      html: html,
     });
-
-    console.log(`Send email: ${nodemailer.getTestMessageUrl(info)}`);
+    
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`Send email: ${nodemailer.getTestMessageUrl(info)}`);
+    }
   } catch (err) {
     throw new Error(err);
   }
 }
 
-export default { createNewUser };
+export default { submitEmail };

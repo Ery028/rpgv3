@@ -193,7 +193,7 @@
 
       async function createFicha(ficha) {
         const url = '/fichas';
-
+        ficha["token"] = Auth.getToken();
         const config = {
           method: 'post',
           body: JSON.stringify(ficha),

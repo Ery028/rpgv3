@@ -29,9 +29,11 @@ router.post('/fichas', isAuthenticated, async (req, res) => {
     const ficha = req.body;
 
     const newFicha = await Ficha.create(ficha);
+    console.log(newFicha)
 
     res.json(newFicha);
   } catch (error) {
+    console.log(error)
     throw new Error('Error in create ficha');
   }
 });
@@ -83,8 +85,6 @@ router.post('/users', async (req, res) => {
     const user = req.body;
 
     const newUser = await User.create(user);
-
-    await SendMail.createNewUser(user.email);
 
     res.json(newUser);
   } catch (error) {
