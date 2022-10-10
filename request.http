@@ -4,14 +4,27 @@
 ### Create Ficha
 
 POST {{host}}/fichas
-Content-Type: application/json
 Authorization: bearer {{token}}
+Content-Type: multipart/form-data; boundary="boundary"
 
-{
-    "name": "Erick",
-    "personagem": "Guts",
-    "category_id": 3
-}
+--boundary
+Content-Disposition: form-data; name="name"
+
+Erick
+--boundary
+Content-Disposition: form-data; name="personagem"
+
+Guerreiro
+--boundary
+Content-Disposition: form-data; name="category_id"
+
+7
+--boundary
+Content-Disposition: form-data; name="image"; filename="guerreiro.jpg"
+Content-Type: image/jpeg
+
+< ./public/img/guerreiro.jpg
+--boundary--
 
 ### Read Foods
 
@@ -21,14 +34,28 @@ Authorization: bearer {{token}}
 ### Update Ficha
 
 PUT {{host}}/fichas/3
-Content-Type: application/json
 Authorization: bearer {{token}}
+Content-Type: multipart/form-data; boundary="boundary"
 
-{
-    "name": "Erick",
-    "personagem": "Garou",
-    "category_id": 3
-}
+--boundary
+Content-Disposition: form-data; name="name"
+
+Erick
+--boundary
+Content-Disposition: form-data; name="personagem"
+
+Guerreiro
+--boundary
+Content-Disposition: form-data; name="category_id"
+
+7
+--boundary
+Content-Disposition: form-data; name="image"; filename="milkshake.jpg"
+Content-Type: image/jpeg
+
+< ./public/img/fichas/guerreiro.jpg
+--boundary--
+
 
 ### Delete Ficha
 

@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import multer from 'multer';
 
+import uploadConfig from './config/multer.js';
 import Category from './models/Category.js';
 import Ficha from './models/Ficha.js';
 import User from './models/User.js';
@@ -24,37 +26,58 @@ router.get('/fichas', isAuthenticated, async (req, res) => {
   }
 });
 
-router.post('/fichas', isAuthenticated, async (req, res) => {
-  try {
-    const ficha = req.body;
+router.post(
+  '/fichas',
+  isAuthenticated,
+  multer(uploadConfig).single('image'),
+  async (req, res) => {
+    try {
+      const ficha = req.body;
 
-    const newFicha = await Ficha.create(ficha);
-    console.log(newFicha)
+      const image = req.file
+      ? `/imgs/fichas/${req.file.filename}`
+      : '/imgs/fichas/placeholder.jpg';
 
-    res.json(newFicha);
-  } catch (error) {
-    console.log(error)
-    throw new Error('Error in create ficha');
-  }
-});
+      const newFicha = await Ficha.create({ ...ficha, image });
 
-router.put('/fichas/:id', isAuthenticated, async (req, res) => {
-  try {
-    const id = Number(req.params.id);
+      const user = await User.readId(req.userId)
 
-    const ficha = req.body;
+      SendMail.newFicha(user.email);
 
-    const newFicha = await Ficha.update(ficha, id);
-
-    if (newFicha) {
       res.json(newFicha);
-    } else {
-      res.status(400).json({ error: 'Ficha not found.' });
+    
+    } catch (error) {
+      throw new Error('Error in create ficha');
     }
-  } catch (error) {
-    throw new Error('Error in update ficha');
   }
-});
+);
+
+router.put(
+  '/fichas/:id',
+  isAuthenticated,
+  multer(uploadConfig).single('image'),
+  async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+
+      const ficha = req.body;
+
+      const image = req.file
+        ? `/imgs/fichas/${req.file.filename}`
+        : '/imgs/fichas/placeholder.jpg';
+
+      const newFicha = await Ficha.update({ ...ficha, image }, id);
+
+      if (newFicha) {
+        res.json(newFicha);
+      } else {
+        res.status(400).json({ error: 'Ficha not found.' });
+      }
+    } catch (error) {
+      throw new Error('Error in update ficha');
+    }
+  }
+);
 
 router.delete('/fichas/:id', isAuthenticated, async (req, res) => {
   try {
@@ -85,6 +108,8 @@ router.post('/users', async (req, res) => {
     const user = req.body;
 
     const newUser = await User.create(user);
+
+    SendMail.newUser(newUser.email);
 
     res.json(newUser);
   } catch (error) {

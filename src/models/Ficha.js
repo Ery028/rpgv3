@@ -7,7 +7,7 @@ async function readAll() {
 
   const sql = `
     SELECT 
-      f.id, f.name, f.personagem, c.name as category
+      f.id, f.name, f.image, f.personagem, c.name as category
     FROM 
       fichas as f INNER JOIN categories as c
     ON
@@ -24,7 +24,7 @@ async function read(id) {
 
   const sql = `
     SELECT 
-      f.id, f.name, f.personagem, c.name as category
+      f.id, f.name, f.image, f.personagem, c.name as category
     FROM 
       fichas as f INNER JOIN categories as c
     ON
@@ -45,7 +45,7 @@ async function readId(id) {
     SELECT 
       *
     FROM 
-      users
+      fichas
     WHERE
       id = ?
   `;
@@ -58,37 +58,37 @@ async function readId(id) {
 async function create(ficha) {
   const db = await Database.connect();
 
-  const { name, personagem, category_id, token } = ficha;
-  const {userId} = jwt.verify(token, process.env.SECRET);
+  const { name, image, personagem, category_id } = ficha;
+
   const sql = `
     INSERT INTO
-      fichas (name, personagem, category_id)
+      fichas (name, image, personagem, category_id)
     VALUES
-      (?, ?, ?)
+      (?, ?, ?, ?)
   `;
 
-  const { lastID } = await db.run(sql, [name, personagem, category_id]);
+  const { lastID } = await db.run(sql, [name, image, personagem, category_id]);
   
-  const {email} = await readId(userId);
-  EmailText(email);
-  return read(lastID);
+  const newFicha = await readId(lastID);
+  
+  return newFicha;
 }
 
 async function update(ficha, id) {
   const db = await Database.connect();
 
-  const { name, personagem, category_id } = ficha;
+  const { name, image, personagem, category_id } = ficha;
 
   const sql = `
     UPDATE 
       fichas
     SET
-      name = ?, personagem = ?, category_id = ?
+      name = ?, image = ?, personagem = ?, category_id = ?
     WHERE
       id = ?
   `;
 
-  const { changes } = await db.run(sql, [name, personagem, category_id, id]);
+  const { changes } = await db.run(sql, [name, image, personagem, category_id, id]);
 
   if (changes === 1) {
     return read(id);
@@ -112,13 +112,5 @@ async function destroy(id) {
   return changes === 1;
 }
 
-function EmailText(to){
-  // console.log(to)
-  const subject = 'Ficha criada no Fichas App';
-  const text = `Ficha criada com sucesso.\n\nAcesse o aplicativo para gerenciar o cadastro de fichas.`;
-  const html = `<h1>Ficha criada com sucesso.</h1><p>Acesse o aplicativo para gerenciar o cadastro de fichas.</p>`;
-
-  Sendmail.submitEmail(to,subject,text,html);
-}
 
 export default { readAll, read, create, update, destroy };

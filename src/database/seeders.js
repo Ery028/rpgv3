@@ -12,7 +12,7 @@ async function up() {
     await Category.create(category);
   }
 
-  for (const ficha of content.foods) {
+  for (const ficha of content.fichas) {
     await Ficha.create(ficha);
   }
 }

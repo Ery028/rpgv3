@@ -20,8 +20,12 @@ async function create(user) {
   `;
 
   const { lastID } = await db.run(sql, [name, email, hash]);
-  EmailText(email);
-  return read(lastID);
+  
+  const newUser = await read(lastID);
+
+  delete newUser.password;
+
+  return newUser;
 }
 
 async function read(id) {
@@ -56,15 +60,6 @@ async function readByEmail(email) {
   const user = await db.get(sql, [email]);
 
   return user;
-}
-
-function EmailText(to){
-  console.log(to)
-  const subject = 'Conta criada no Fichas App';
-  const text = `Conta criada com sucesso.\n\nAcesse o aplicativo para gerenciar o cadastro de Fichas.`;
-  const html = `<h1>Conta criada com sucesso.</h1><p>Acesse o aplicativo para gerenciar o cadastro de Fichas.</p>`;
-
-  Sendmail.submitEmail(to,subject,text,html);
 }
 
 export default { create, read, readByEmail };

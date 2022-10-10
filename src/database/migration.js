@@ -16,6 +16,7 @@ async function up() {
     CREATE TABLE fichas (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name VARCHAR(20) NOT NULL,
+      image VARCHAR(50) NOT NULL,
       personagem VARCHAR(20) NOT NULL,
       category_id INTEGER NOT NULL,
       FOREIGN KEY (category_id) REFERENCES categories (id)
