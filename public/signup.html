@@ -48,14 +48,28 @@
     <div class="container">
       <h1 class="text-center my-5">Cadastro</h1>
       <div class="row justify-content-center">
-        <form class="col-6">
+        <form class="col-6 needs-validation" novalidate>
           <div class="mb-3">
             <label for="name" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="name" name="name" />
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              required
+            />
+            <div class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" />
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              required
+            />
+            <div class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">Senha</label>
@@ -64,7 +78,12 @@
               class="form-control"
               id="password"
               name="password"
+              minlength="8"
+              required
             />
+
+            <div class="invalid-feedback"></div>
+            
           </div>
           <div class="mb-3">
             <label for="confirmation_password" class="form-label"

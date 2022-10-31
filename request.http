@@ -23,7 +23,7 @@ Content-Disposition: form-data; name="category_id"
 Content-Disposition: form-data; name="image"; filename="guerreiro.jpg"
 Content-Type: image/jpeg
 
-< ./public/img/guerreiro.jpg
+< ./public/img/fichas/guerreiro.jpg
 --boundary--
 
 ### Read Foods

@@ -35,12 +35,12 @@ router.post(
       const ficha = req.body;
 
       const image = req.file
-      ? `/imgs/fichas/${req.file.filename}`
-      : '/imgs/fichas/placeholder.jpg';
+      ? `/img/fichas/${req.file.filename}`
+      : '/img/fichas/placeholder.jpg';
 
       const newFicha = await Ficha.create({ ...ficha, image });
 
-      const user = await User.readId(req.userId)
+      const user = await User.read(req.userId)
 
       SendMail.newFicha(user.email);
 
@@ -63,8 +63,8 @@ router.put(
       const ficha = req.body;
 
       const image = req.file
-        ? `/imgs/fichas/${req.file.filename}`
-        : '/imgs/fichas/placeholder.jpg';
+        ? `/img/fichas/${req.file.filename}`
+        : '/img/fichas/placeholder.jpg';
 
       const newFicha = await Ficha.update({ ...ficha, image }, id);
 
