@@ -1,0 +1,13 @@
+body{
+    background-image : url('/img/signup.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+h1, label {
+    color: white;
+}
+
+.navbar{
+
+    background-color: rgb(56, 126, 218);}
